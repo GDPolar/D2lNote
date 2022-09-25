@@ -1,16 +1,16 @@
-# http://www.feiguyunai.com/index.php/2019/09/11/pytorch-char03/
+
 # 借助nn工具箱来实现一个神经网络，源数据集为MNIST。
 # 主要步骤：
-# （1）利用Pytorch内置函数mnist下载数据
-# （2）利用torchvision对数据进行预处理，调用torch.utils建立一个数据迭代器
+# （1）利用 Pytorch 内置函数 mnist 下载数据
+# （2）利用 torchvision 对数据进行预处理，调用 torch.utils 建立一个数据迭代器
 # （3）可视化源数据
-# （4）利用nn工具箱构建神经网络模型
+# （4）利用 nn 工具箱构建神经网络模型
 # （5）实例化模型，并定义损失函数及优化器
 # （6）训练模型
 # （7）可视化结果
 
-# 具有学习参数的（例如，conv2d, linear, batch_norm) 继承nn.Module
-# 没有学习参数的（例如，maxpool, loss func, activation func）等用nn.functional中的函数或者继承nn.Module
+# 具有学习参数的（例如，conv2d, linear, batch_norm) 继承 nn.Module
+# 没有学习参数的（例如，maxpool, loss func, activation func）等用 nn.functional 中的函数或者继承 nn.Module
 
 import numpy as np
 import torch
@@ -19,7 +19,7 @@ from torchvision.datasets import mnist
 # 导入预处理模块
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
-# 导入nn及优化器
+# 导入 nn 及优化器
 import torch.nn.functional as F
 import torch.optim as optim
 from torch import nn
@@ -33,15 +33,15 @@ num_epoches = 20
 lr = 0.01
 momentum = 0.5
 
-# 定义预处理函数，这些预处理依次放在Compose函数中
-# transforms.Compose可以把一些转换函数组合在一起
-# Normalize([0.5], [0.5])对张量进行平均值和方差为0.5的归一化
-# 因图像是灰色的只有一个通道，若有三个通道，应该是Normalize([m1,m2,m3], [n1,n2,n3])
+# 定义预处理函数，这些预处理依次放在 Compose 函数中
+# transforms.Compose 可以把一些转换函数组合在一起
+# Normalize([0.5], [0.5]) 对张量进行平均值和方差为 0.5 的归一化
+# 因图像是灰色的只有一个通道，若有三个通道，应该是 Normalize([m1,m2,m3], [n1,n2,n3])
 transform = transforms.Compose([transforms.ToTensor(),transforms.Normalize([0.5], [0.5])])
 # 下载数据，并对数据进行预处理
 train_dataset = mnist.MNIST('./data', train=True, transform=transform, download=True)
 test_dataset = mnist.MNIST('./data', train=False, transform=transform)
-# dataloader是一个可迭代对象，可以使用迭代器一样使用。
+# dataloader 是一个可迭代对象，可以使用迭代器一样使用。
 train_loader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=True)
 test_loader = DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False)
 
@@ -81,10 +81,12 @@ class Net(nn.Module):
         x = self.layer3(x)
         return x
 	
-#检测是否有可用的GPU，有则使用，否则使用CPU
+# 检测是否有可用的 GPU，有则使用，否则使用 CPU
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-#实例化网络
+
+# 实例化网络
 model = Net(28 * 28, 300, 100, 10)
+# to() 将张量挪到指定的 device 上
 model.to(device)
  
 # 定义损失函数和优化器
@@ -100,8 +102,8 @@ for epoch in range(num_epoches):
     train_loss = 0
     train_acc = 0
     model.train()
-    #动态修改参数学习率
-    if epoch%5==0:
+    # 动态修改参数学习率
+    if epoch % 5==0:
         optimizer.param_groups[0]['lr']*=0.1
     for img, label in train_loader:
         img=img.to(device)
@@ -153,3 +155,5 @@ for epoch in range(num_epoches):
 plt.title('train loss')
 plt.plot(np.arange(len(losses)), losses)
 plt.legend(['Train Loss'], loc='upper right')
+
+# http://www.feiguyunai.com/index.php/2019/09/11/pytorch-char03/
