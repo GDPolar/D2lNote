@@ -60,3 +60,6 @@ train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)
 
 lr, num_epochs = 0.01, 10
 d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu()) # loss 0.333, train acc 0.878, test acc 0.880
+
+lr, num_epochs = 0.01, 50
+d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu()) # loss 0.118, train acc 0.955, test acc 0.921
