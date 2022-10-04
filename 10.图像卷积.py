@@ -8,6 +8,7 @@ def corr2d(X, K):
     h, w = K.shape
     # 计算输出尺寸
     Y = torch.zeros((X.shape[0] - h + 1, X.shape[1] - w + 1))
+    # 对应位置相乘再相加
     for i in range(Y.shape[0]):
         for j in range(Y.shape[1]):
             Y[i, j] = (X[i:i + h, j:j + w] * K).sum()
@@ -67,4 +68,5 @@ for i in range(10):
     conv2d.weight.data[:] -= lr * conv2d.weight.grad
     if (i + 1) % 2 == 0:
         print(f'epoch {i+1}, loss {l.sum():.3f}')
+
 conv2d.weight.data.reshape((1, 2))
