@@ -3,7 +3,7 @@ from torch import nn
 from d2l import torch as d2l
 
 
-# NiN 块包括一个卷积层，两个 1 * 1 的卷积层。后两个卷积层充当带有 ReLU 激活函数的逐像素全连接层
+# NiN 块包括一个卷积层，两个 1 * 1 的卷积层。后两个 1 * 1 的卷积层充当带有 ReLU 激活函数的逐像素全连接层
 # NiN 去除了容易造成过拟合及参数较多的全连接层，将它们替换为全局平均汇聚层（即在所有位置上进行求平均）
 
 def nin_block(in_channels, out_channels, kernel_size, strides, padding):
