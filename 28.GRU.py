@@ -2,6 +2,11 @@ import torch
 from torch import nn
 from d2l import torch as d2l
 
+# GRU 核心是 Reset Gate 和 Update Gate
+# 重置门强制隐藏状态遗忘一些历史信息，并利用当前输入的信息
+# 这可以令隐藏状态遗忘任何在未来发现与预测不相关的信息，同时也允许构建更加紧致的表征
+# 而更新门将控制前面隐藏状态的信息有多少会传递到当前隐藏状态
+
 batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 
